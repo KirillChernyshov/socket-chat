@@ -21,7 +21,6 @@ function submit(event: SubmitEvent) {
       <v-text-field
         v-model="userName"
         label="User Name"
-        size="sm"
         variant="outlined"
         base-color="deep-purple"
       />
