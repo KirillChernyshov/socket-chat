@@ -5,9 +5,13 @@
     "moduleResolution": "node",
     "strict": true,
     "sourceMap": true,
-    "types": ["vite/client"],
     "isolatedModules": true,
     "useDefineForClassFields": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "*.ts": ["*"],
+    },
   },
   "exclude": [
     "node_modules"
