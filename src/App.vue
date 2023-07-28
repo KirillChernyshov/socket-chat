@@ -3,9 +3,11 @@
 </script>
 
 <template>
-  <div class="screen">
-    <router-view />
-  </div>
+  <v-app class="screen" full-height="true">
+    <v-main class="d-flex align-center justify-center">
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped lang="scss">
