@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { VVirtualScroll } from 'vuetify/components/VVirtualScroll';
-import { socket } from '@/api';
 
 const messagesElement = ref<VVirtualScroll>();
 
@@ -13,7 +12,7 @@ const length = computed(() => Object.keys(messages.value).length);
 
 function send() {
   if (!message.value) return;
-  socket.emit('message', message.value);
+  // socket.emit('message', message.value);
   message.value = '';
 }
 
@@ -35,19 +34,19 @@ onMounted(() => {
       messagesElement.value?.$el.scroll(0, 9999999);
     }
   });
-  socket.on('message', message => {
-
-    const timestamp = Date.now();
-    Object.assign(messages.value, { [timestamp]: {
-      id: timestamp,
-      name: `User#${(timestamp / 10_000_000).toString().split('.')[1]}`,
-      message: message,
-      color: `#${Math.round(Math.random() * 1000)}`,
-      timestamp: timestamp,
-    }});
-
-    nextTick(() => messagesElement.value?.$el.scroll(0, 9999999));
-  });
+  // socket.on('message', message => {
+  //
+  //   const timestamp = Date.now();
+  //   Object.assign(messages.value, { [timestamp]: {
+  //     id: timestamp,
+  //     name: `User#${(timestamp / 10_000_000).toString().split('.')[1]}`,
+  //     message: message,
+  //     color: `#${Math.round(Math.random() * 1000)}`,
+  //     timestamp: timestamp,
+  //   }});
+  //
+  //   nextTick(() => messagesElement.value?.$el.scroll(0, 9999999));
+  // });
 });
 </script>
 

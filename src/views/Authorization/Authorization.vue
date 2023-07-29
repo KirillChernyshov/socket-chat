@@ -1,18 +1,26 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, toRefs, watchEffect } from 'vue';
 import { useRouter } from 'vue-router';
+import useAccountStore from '@/stores/useAccountStore';
 
 const router = useRouter();
+const accountStore = useAccountStore();
+const { isAuthorized, account } = toRefs(accountStore);
 
-const userName = ref(`User#${(Date.now() / 10_000_000).toString().split('.')[1]}`);
-const color = ref('#3400FF');
+const userName = ref(account.value.userName
+    ?? `User#${(Date.now() / 10_000_000).toString().split('.')[1]}`);
+const color = ref(account.value.color ?? '#3400FF');
 
 function submit(event: SubmitEvent) {
   event.preventDefault();
   if (!userName.value) return;
 
-  router.push('Chat');
+  accountStore.logIn(userName.value, color.value);
 }
+
+watchEffect(() => {
+  if (isAuthorized.value) router.push('Chat');
+});
 </script>
 
 <template>
@@ -27,8 +35,8 @@ function submit(event: SubmitEvent) {
       <v-color-picker
         v-model="color"
         class="mb-5 align-self-center"
-        hide-canvas
-        hide-inputs
+        :hide-canvas="true"
+        :hide-inputs="true"
       />
       <v-btn
         size="x-large"
