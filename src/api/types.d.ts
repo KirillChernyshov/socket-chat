@@ -1,6 +1,10 @@
+import { IMember } from '@/types';
+
 export interface IServerToClientEvents {
-  authorized: () => void,
+  authorized: (members: Record<string, IMember>) => void,
   message: (payload: string) => void,
+  add_member: (member: IMember) => void,
+  remove_member: (is: string) => void,
 }
 
 export interface IClientToServerEvents {

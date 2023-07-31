@@ -7,7 +7,7 @@ export default defineStore('Account', () => {
 
   const account = ref({
     userName: window.localStorage.getItem('userName') || '',
-    color: window.localStorage.getItem('color') || '#FFF',
+    color: window.localStorage.getItem('color') || '#d9ff5e',
   });
 
   const isExist = computed(() => !!account.value.userName);
