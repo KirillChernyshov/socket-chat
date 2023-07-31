@@ -5,7 +5,7 @@ import events from '@/api/events';
 import { computed, ref } from 'vue';
 
 export default defineStore('Socket', () => {
-  const URL = '127.0.0.1:3010';
+  const URL = import.meta.env.VITE_API_URL; // '127.0.0.1:3010';
 
   const connected = ref(false);
 
