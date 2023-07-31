@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, onMounted, ref, toRefs } from 'vue';
 import { VVirtualScroll } from 'vuetify/components/VVirtualScroll';
+import useMessagesStore from '@/stores/useMessagesStore';
+
+const messagesStore = useMessagesStore();
+const { members } = toRefs(messagesStore);
 
 const messagesElement = ref<VVirtualScroll>();
 
@@ -34,24 +38,16 @@ onMounted(() => {
       messagesElement.value?.$el.scroll(0, 9999999);
     }
   });
-  // socket.on('message', message => {
-  //
-  //   const timestamp = Date.now();
-  //   Object.assign(messages.value, { [timestamp]: {
-  //     id: timestamp,
-  //     name: `User#${(timestamp / 10_000_000).toString().split('.')[1]}`,
-  //     message: message,
-  //     color: `#${Math.round(Math.random() * 1000)}`,
-  //     timestamp: timestamp,
-  //   }});
-  //
-  //   nextTick(() => messagesElement.value?.$el.scroll(0, 9999999));
-  // });
 });
 </script>
 
 <template>
-  <v-card width="800" title="Чат" class="chat-card d-flex flex-column pa-3">
+  <v-card
+    width="800"
+    title="Чат"
+    :subtitle="'Участники: ' + Object.values(members).length.toString()"
+    class="chat-card d-flex flex-column pa-3"
+  >
     <v-list ref="messagesElement" class="flex-1-1">
       <v-list-item
         v-for="item in messages"
