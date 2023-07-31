@@ -2,7 +2,7 @@ import { defineStore } from 'pinia';
 import { io, Socket } from 'socket.io-client';
 import { IClientToServerEvents, IServerToClientEvents } from '@/api/types';
 import events from '@/api/events';
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 
 export default defineStore('Socket', () => {
   const URL = '127.0.0.1:3010';
@@ -13,6 +13,7 @@ export default defineStore('Socket', () => {
     autoConnect: false,
   });
 
+  const id = computed(() => socket.id);
 
   function connect() {
     if (socket.connected) return;
@@ -36,8 +37,8 @@ export default defineStore('Socket', () => {
 
     for (const event in eventsList) {
       const name = event as keyof IClientToServerEvents;
-      const handler = eventsList[name];
-      if (handler) socket.on(name, handler);
+      const handler = eventsList[name as keyof typeof eventsList];
+      if (handler) socket.on(name as keyof typeof eventsList, handler);
     }
   }
 
@@ -45,6 +46,7 @@ export default defineStore('Socket', () => {
 
   return {
     connected,
+    id,
 
     connect,
     call,

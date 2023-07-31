@@ -7,9 +7,9 @@ const router = useRouter();
 const accountStore = useAccountStore();
 const { isAuthorized, account } = toRefs(accountStore);
 
-const userName = ref(account.value.userName
-    ?? `User#${(Date.now() / 10_000_000).toString().split('.')[1]}`);
-const color = ref(account.value.color ?? '#3400FF');
+const userName = ref(account.value.username
+    || `User#${(Date.now() / 10_000_000).toString().split('.')[1]}`);
+const color = ref(account.value.color || '#3400FF');
 
 function submit(event: SubmitEvent) {
   event.preventDefault();

@@ -1,27 +1,28 @@
 import { defineStore } from 'pinia';
 import { computed, readonly, ref, watch } from 'vue';
 import useSocketStore from '@/stores/useSocketStore';
+import { IOutputMember } from '@/types';
 
 export default defineStore('Account', () => {
   const socketStore = useSocketStore();
 
-  const account = ref({
-    userName: window.localStorage.getItem('userName') || '',
+  const account = ref<IOutputMember>({
+    username: window.localStorage.getItem('username') || '',
     color: window.localStorage.getItem('color') || '#d9ff5e',
   });
 
-  const isExist = computed(() => !!account.value.userName);
+  const isExist = computed(() => !!account.value.username);
 
   const isAuthorized = ref(false);
 
   watch(account, () => {
-    window.localStorage.setItem('userName', account.value.userName);
+    window.localStorage.setItem('username', account.value.username);
     window.localStorage.setItem('color', account.value.color);
   });
 
-  async function logIn(userName: string, color: string) {
+  async function logIn(username: string, color: string) {
     account.value = {
-      userName,
+      username,
       color,
     };
 
