@@ -66,7 +66,7 @@ function timeFormat(date: number) {
         :class="{ 'mr-0': item.isSelf, 'ml-auto': item.isSelf }"
       >
         <v-list-item-title class="text-sm-body-2" :style="{ color: getUser(item.userId)?.color, 'text-shadow': 'rgba(255, 255, 255, 0.2) 0 0 1px' }">
-          {{ getUser(item.userId)?.username }} [{{ timeFormat(item.timestamp) }}] {{ item.isSelf }}
+          {{ getUser(item.userId)?.username }} [{{ timeFormat(item.timestamp) }}]
         </v-list-item-title>
         <span>{{ item.text }}</span>
       </v-list-item>
